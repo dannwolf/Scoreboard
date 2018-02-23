@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-sm-4"><h2>Nuevo Score</h2></div>
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4"><br /><a href="index"><button type="button" class="btn btn-primary add"><span class="glyphicon glyphicon-arrow-left"></span> Volver a ScoreCard</button></a></div>
+</div>
+<form action="<?php echo APP_URL; ?>/scores/agregar" role="form" method="POST">
+  <div class="form-group">
+    <label for="driver">Driver:</label>
+    <select name="drivers_id" class="form-control">
+      <?php foreach ($drivers as $driver): ?>
+        <option value="<?php echo $driver["drivers"]["id"]; ?>">
+          <?php echo $driver["drivers"]["nombre"]; ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+  </div>  
+  <div class="form-group">
+    <label for="stat">Stat:</label>
+    <select name="stats_id" class="form-control">
+      <?php foreach ($stats as $stat): ?>
+        <option value="<?php echo $stat["stats"]["id"]; ?>">
+          <?php echo $stat["stats"]["nombre"]; ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="periodo">Periodo:</label>
+    <select name="periodos_id" class="form-control">
+      <?php foreach ($periodos as $periodo): ?>
+        <option value="<?php echo $periodo["periodos"]["id"]; ?>">
+          <?php echo $periodo["periodos"]["nombre"]; ?>
+        </option>
+      <?php endforeach; ?>
+    </select>
+  </div>  
+  <div class="form-group">
+    <label for="valor">Valor:</label>
+    <input type="number" class="form-control" id="valor" name="valor" value="" placeholder="">
+  </div>
+  </div>
+    <label for="fecha">Fecha:</label>
+    <input type="date" class="form-control" id="fecha" name="fecha" >
+  </div>
+  <br>
+  <button type="submit" class="btn btn-default">Agregar score</button>
+</form>

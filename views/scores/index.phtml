@@ -1,0 +1,123 @@
+<div class="row">
+  <div class="col-md-12"><h2 align="center">SCORECARD</h2></div>
+  <div align="center" class="col-md-12">
+    <a href="agregar">
+      <button type="button" class="btn btn-primary add">
+        <span class="glyphicon glyphicon-plus"></span> Agregar Score
+      </button>
+    </a>
+    <a href="<?php echo APP_URL;?>/drivers/index">
+      <button type="button" class="btn btn-primary add">
+        <span class="glyphicon glyphicon-asterisk"></span> Drivers
+      </button>
+    </a>
+  </div>
+</div>
+ 
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+
+       <?php
+        $i = 0;
+        $driverId=array();
+      foreach ($drivers as $driver): 
+        if ($i==0): ?>
+          <li class="active"><a data-toggle="tab" href="#<?php echo $driver["drivers"]["id"]; ?>"><?php echo $driver["drivers"]["nombre"]; ?></a></li>
+        <?php else: ?>
+         <li><a data-toggle="tab" href="#<?php echo $driver["drivers"]["id"]; ?>"><?php echo $driver["drivers"]["nombre"]; ?></a></li>
+        <?php 
+        endif; 
+        $i++;
+        $driverId["id"][] = $driver["drivers"]["id"];
+        $driverId["nombre"][] = $driver["drivers"]["nombre"];
+      endforeach;?>
+    </ul>
+  </div>
+</div>
+<div class="tab-content">
+<?php
+  for ($j=0; $j < $i ; $j++):
+    if ($j==0): ?>
+      <div id="<?php echo $driverId["id"][$j]; ?>" class="tab-pane fade in active">
+    <?php else: ?>
+      <div id="<?php echo $driverId["id"][$j]; ?>" class="tab-pane fade ">
+    <?php endif; 
+
+  $suma=array();
+  $x=0;
+  ?>
+    <br>
+    <table class="table table-bordered">
+      <tr>
+        <th></th>
+        <?foreach ($periodos as $periodo):?>
+            <th><?echo $periodo["periodos"]["nombre"]?></th>
+        <?endforeach;?>    
+      </tr>
+      <?foreach ($stats as $stat ):?>
+        <tr>
+          <th><?echo $stat["stats"]["nombre"]; $x=0;?></th>
+
+        
+        
+        <?php foreach ($scores as $score):
+                
+                if ($score["scores"]["drivers_id"]==$driverId["id"][$j]):
+                 
+
+                  if($score["scores"]["periodos_id"]==$score["periodos"]["id"] and $stat["stats"]["id"]==$score["scores"]["stats_id"]):
+
+                  ?>
+                  
+                  <td><?php  
+
+                    echo $this->Html->link(
+                      $score["scores"]["valor"],
+                      array(
+                          "controller"=>"scores",
+                          "method"=>"editar",
+                          "args"=>$score["scores"]["id"]
+                          ),
+                      array(
+                          "title"=>"Editar score"     
+                          )
+                    );
+                    @$suma[$x++]+= $score["scores"]["valor"];
+                    ?>
+                  </td>
+
+                <?
+
+                
+                  
+                endif; 
+                
+               
+              endif;        
+            endforeach; 
+        endforeach;    
+            ?>
+        </tr>
+        <tr>
+          <th><p color="red">Promedios</p></th>
+          
+            <?
+            $sumaprom=0;
+             foreach ($suma as $total) {
+               echo "<td>".$total/4 ."</td>";
+                
+                $sumaprom+=$total/4;
+             }
+
+             
+
+            ?>
+        </tr>
+    </table>
+    <br>
+    <h1 align="center"><?php echo "Promedio Total del mes: ". $sumaprom/4; ?></h1>
+  </div>
+<?php endfor; ?>
+</div>

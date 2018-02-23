@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-md-12"><h2>Listado de drivers</h2></div>
+  <div class="col-md-12">
+    <a href="agregar">
+      <button type="button" class="btn btn-primary add">
+        <span class="glyphicon glyphicon-plus"></span> Agregar driver
+      </button>
+    </a>
+    <a href="<?php echo APP_URL;?>/scores/index">
+      <button type="button" class="btn btn-primary add">
+        <span class="glyphicon glyphicon-asterisk"></span> Scoreboard
+      </button>
+    </a>
+  </div>
+</div>
+
+<br>
+<table class="table table-bordered">
+  <tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Accion</th>
+
+  </tr>
+  <?php foreach ($drivers as $driver): ?>
+  <tr>
+    <td><?php echo $driver["drivers"]["id"]; ?></td>
+    <td><?php echo $driver["drivers"]["nombre"]; ?></td>
+    <td>
+      <?php
+      echo $this->Html->link(
+        "Editar",
+        array(
+          "controller"=>"drivers",
+          "method"=>"editar",
+          "args"=>$driver["drivers"]["id"]
+        ),
+        array(
+          "title"=>"Editar categoria",
+          
+        )
+      );
+      echo " | ";
+      echo $this->Html->link(
+        "Eliminar",
+        array(
+          "controller"=>"drivers",
+          "method"=>"eliminar",
+          "args"=>$driver["drivers"]["id"]
+        ),
+        array(
+          "title"=>"Eliminar driver"
+        )      
+      );
+
+       ?>
+    </td>
+  </tr>
+<?php endforeach; ?>
+</table>

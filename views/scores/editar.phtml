@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-sm-4"><h2>Editar Score</h2></div>
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4"><br /><a href="<?php echo APP_URL; ?>/scores/index"><button type="button" class="btn btn-primary add"><span class="glyphicon glyphicon-arrow-left"></span> Volver a Scorecard</button></a></div>
+</div>
+
+<form action="<?php echo APP_URL; ?>/scores/editar?$id" role="form" method="POST">
+  <input type="hidden" name="id" value="<?php echo $score["id"]; ?>">
+  <div class="form-group">
+    <label for="driver">Driver:</label>
+    <select name="drivers_id" class="form-control">
+      <?php foreach ($drivers as $driver): 
+        if ($driver["drivers"]["id"]==$score["drivers_id"]) { ?>
+          <option value="<?php echo $driver["drivers"]["id"]; ?>" selected>
+          <?php echo $driver["drivers"]["nombre"]; ?>
+          </option>
+        <?php }else{ ?>
+          <option value="<?php echo $driver["drivers"]["id"]; ?>">
+          <?php echo $driver["drivers"]["nombre"]; ?>
+          </option>
+        <?php } endforeach; ?>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="stat">Stat:</label>
+    <select name="stats_id" class="form-control">
+      <?php foreach ($stats as $stat): 
+        if ($stat["stats"]["id"]==$score["stats_id"]) { ?>
+          <option value="<?php echo $stat["stats"]["id"]; ?>" selected>
+          <?php echo $stat["stats"]["nombre"]; ?>
+          </option>
+        <?php }else{ ?>
+          <option value="<?php echo $stat["stats"]["id"]; ?>">
+          <?php echo $stat["stats"]["nombre"]; ?>
+          </option>
+        <?php } endforeach; ?>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="periodo">Periodo:</label>
+    <select name="periodos_id" class="form-control">
+      <?php foreach ($periodos as $periodo): 
+        if ($periodo["periodos"]["id"]==$score["periodos_id"]) { ?>
+          <option value="<?php echo $periodo["periodos"]["id"]; ?>" selected>
+          <?php echo $periodo["periodos"]["nombre"]; ?>
+          </option>
+        <?php }else{ ?>
+          <option value="<?php echo $periodo["periodos"]["id"]; ?>">
+          <?php echo $periodo["periodos"]["nombre"]; ?>
+          </option>
+        <?php } endforeach; ?>
+    </select>
+  </div>    
+    <div class="form-group">
+  <label for="valor">Valor: </label>
+  <input type="number" class="form-control" id="valor" name="valor" value="<?php echo $score["valor"]; ?>">  
+  </p>
+  </div>   
+ </div>
+  <div class="form-group">
+  <label for="fecha">Fecha: </label>
+    <input type="date" class="form-control" name="fecha" value="<?php echo $score["fecha"]; ?>"></p>
+  </div>
+  <button type="submit" class="btn btn-default">Guardar score</button>
+</form>
+
