@@ -15,7 +15,6 @@ class ScoresController  extends AppController{
     $stats = Stats::obtenerTodos();
     $periodos = Periodos::obtenerTodos();
 
-    
     $this->set("scores",$scores);
     $this ->set("drivers",$drivers);
     $this->set("stats",$stats);

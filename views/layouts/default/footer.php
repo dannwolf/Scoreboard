@@ -7,6 +7,6 @@
 		}
 	});
 </script>
-
+</div>
 </body>
 </html>

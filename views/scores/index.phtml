@@ -49,58 +49,55 @@
   $x=0;
   ?>
     <br>
-    <table class="table table-bordered">
-      <tr>
-        <th></th>
-        <?foreach ($periodos as $periodo):?>
-            <th><?echo $periodo["periodos"]["nombre"]?></th>
-        <?endforeach;?>    
-      </tr>
-      <?foreach ($stats as $stat ):?>
-        <tr>
-          <th><?echo $stat["stats"]["nombre"]; $x=0;?></th>
+<?php
+    foreach ($scores as $score) {
+      $registros[$score["scores"]["stats_id"]]["valor"][$score["periodos"]["id"]] = $score["scores"]["valor"];
+      $registros[$score["scores"]["stats_id"]]["id"][$score["periodos"]["id"]] = $score["scores"]["id"];
+    }
+?>    
+<table class="table table-bordered">
+<tr>
+  <th></th>
+  <?php
+   foreach ($periodos as $periodo) {
+    echo "<th>".$periodo["periodos"]["nombre"]."</th>";
+   }
+   ?>
 
-        
-        
-        <?php foreach ($scores as $score):
-                
-                if ($score["scores"]["drivers_id"]==$driverId["id"][$j]):
-                 
+</tr>
+  <tr>
+    
+<?php
+for ($j=1; $j <= 4 ; $j++) {
+  echo "<td>".$stats[$j-1]["stats"]["nombre"]."</td>";
 
-                  if($score["scores"]["periodos_id"]==$score["periodos"]["id"] and $stat["stats"]["id"]==$score["scores"]["stats_id"]):
-
-                  ?>
-                  
-                  <td><?php  
-
-                    echo $this->Html->link(
-                      $score["scores"]["valor"],
+  for ($i=1; $i <= 4 ; $i++) { 
+    if (!empty($registros[$j]["valor"][$i])) {
+      echo "<td>".
+      $this->Html->link(
+                      $registros[$j]["valor"][$i],
                       array(
                           "controller"=>"scores",
                           "method"=>"editar",
-                          "args"=>$score["scores"]["id"]
+                          "args"=>$registros[$j]["id"][$i]
                           ),
                       array(
                           "title"=>"Editar score"     
                           )
-                    );
-                    @$suma[$x++]+= $score["scores"]["valor"];
-                    ?>
-                  </td>
+             ).
+      "</td>";
+    }else{
+      echo "<td></td>";
+    }
+//    @$suma[$x++]+= $registros[$j]["valor"][$i];
+  }
+  echo "</tr>";
 
-                <?
+}
 
-                
-                  
-                endif; 
-                
-               
-              endif;        
-            endforeach; 
-        endforeach;    
-            ?>
-        </tr>
-        <tr>
+?>
+  
+<tr>
           <th><p color="red">Promedios</p></th>
           
             <?
@@ -110,12 +107,10 @@
                 
                 $sumaprom+=$total/4;
              }
-
-             
-
             ?>
         </tr>
     </table>
+    
     <br>
     <h1 align="center"><?php echo "Promedio Total del mes: ". $sumaprom/4; ?></h1>
   </div>
